@@ -1,0 +1,37 @@
+clc;
+clear all;
+close all;
+
+% Estructura rotacional en los tres ejes ortogonales para sistemas móviles
+% respecto a sistema de referencia fijo
+
+px0 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+py0 = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19];
+pz0 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+
+theta = pi/4;
+Rtheta = [cos(theta), -sin(theta), 0; sin(theta), cos(theta), 0; 0, 0, 1];
+theta2 = [cos(theta), 0, sin(theta); 0, 1, 0; -sin(theta), 0, cos(theta)];
+theta3 = [1, 0, 0; 0, cos(theta), -sin(theta); 0, sin(theta), cos(theta)];
+
+Sigma1 = Rtheta * [px0; py0; pz0];
+px1 = Sigma1(1, :);
+py1 = Sigma1(2, :);
+pz1 = Sigma1(3, :);
+
+Sigma2 = theta2 * [px1; py1; pz1];
+px2 = Sigma2(1, :);
+py2 = Sigma2(2, :);
+pz2 = Sigma2(3, :);
+
+Sigma3 = theta3 * [px2; py2; pz2];
+px3 = Sigma3(1, :);
+py3 = Sigma3(2, :);
+pz3 = Sigma3(3, :);
+
+plot3(px0, py0, pz0, '*', px1, py1, pz1, 'o', px2, py2, pz2, 'x', px3, py3, pz3, 'd');
+title('Ejercicio semana 5');
+xlabel('x');
+ylabel('y');
+zlabel('z');
+grid on;
